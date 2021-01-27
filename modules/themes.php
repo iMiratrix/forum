@@ -14,14 +14,14 @@ if (isset($_SESSION['id'])) {
         $id = $_GET['id'];
         $stmt = $pdo->prepare("SELECT n.*, COALESCE(cnt, 0) as cmtcnt
                                        FROM themes n
-                                       LEFT JOIN 
-                                      (SELECT id_theme, COUNT(id_comment) as cnt 
+                                       LEFT JOIN
+                                      (SELECT id_theme, COUNT(id_comment) as cnt
                                        FROM comments
-                                       GROUP BY id_theme) as ct 
+                                       GROUP BY id_theme) as ct
                                        ON n.id_theme = ct.id_theme
-                                       AND n.id_section = ? 
-                                       ORDER BY n.date DESC");
-        $stmt->execute([$id]);
+                                       WHERE n.status=?
+                                       AND n.id_section=?");
+        $stmt->execute([1, $id]);
         if ($stmt->rowCount() > 0) {
             print "<h1>Темы:</h1>";
             while ($data = $stmt->fetch(PDO::FETCH_ASSOC)) {
