@@ -14,7 +14,8 @@ if (!isset($_SESSION['id'])) {
             $stmt_check = $pdo->prepare($sql_check);
             $stmt_check->execute([$email]);
             if ($stmt_check->fetchColumn()) {
-                print("Такая почта уже используется");
+                print("Такая почта уже используется<br><a href='${site_url}/modules/reg.php'>Назад</a>");
+                die();
             }
             $password = password_hash($password, PASSWORD_DEFAULT);
             $sql = 'INSERT INTO `users` (`email`, `password`, `name`, `surname`, `date_reg`, `permission`) VALUES(?, ?, ?, ?, ?, ?)';
@@ -25,7 +26,7 @@ if (!isset($_SESSION['id'])) {
                 header("Location:" . $site_url);
             }
         } else {
-            print("Заполните поля<br><a href='${site_url}'>Назад</a>");
+            print("Заполните поля<br><a href='${site_url}/modules/reg.php'>Назад</a>");
         }
     }
 } else {

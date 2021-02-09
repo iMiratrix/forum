@@ -5,9 +5,7 @@ require '../server/config.php';
 if (isset($_SESSION['id'])) {
     print "<a href='$site_url/modules/home.php'>Главная</a><br>";
     print "<a href='$site_url/server/logout.php'>Выйти из записи</a><br>
-<a href='$site_url/admin_panel/admin.php'>Ожидает модерацию</a><br>
-<a href='$site_url/admin_panel/accept.php'>Одобрено</a><br>
-<a href='$site_url/admin_panel/reject.php'>Отклонено</a>";
+<a href='$site_url/admin_panel/admin.php'>Назад</a><br>";
     $stmt = $pdo->prepare("SELECT * FROM users where permission = ? OR permission = ?");
     $stmt->execute([1, 2]);
     if ($stmt->rowCount() > 0) {

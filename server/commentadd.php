@@ -6,7 +6,7 @@ if (isset($_SESSION['id'])) {
     if (isset($_POST['sub'])) {
         if (!empty($_POST['comment_text'])) {
             $comment = $_POST['comment_text'];
-            $id_user = $_SESSION['id'];
+            $id_user = $_SESSION['id_user'];
             $id_theme = $_POST['id'];
             $today = date("Y-m-d H:i:s");
             $stmt = $pdo->prepare("INSERT INTO `comments` (`id_theme`,`id_user`,`comment_text`,`date`) VALUES (?, ?, ?, ?)");

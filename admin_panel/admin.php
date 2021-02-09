@@ -3,15 +3,27 @@ session_start();
 require '../server/config.php';
 
 if (isset($_SESSION['id'])) {
-    print "<a href='$site_url/modules/home.php'>Главная</a><br>";
+    print "<a href='$site_url/modules/themes.php'>Главная</a><br>";
     print "<a href='$site_url/server/logout.php'>Выйти из записи</a><br>
-<a href='$site_url/admin_panel/accept.php'>Одобрено</a><br>
-<a href='$site_url/admin_panel/reject.php'>Отклонено</a><br>
 <a href='$site_url/admin_panel/users.php'>Пользователи</a>";
     $stmt = $pdo->prepare("SELECT * FROM users INNER JOIN themes ON users.id_user = themes.id_user AND themes.status = ?");
-    $stmt->execute([0]);
+    $stmt->execute([0 | $_POST['sort']]);
     if ($stmt->rowCount() > 0) {
-        print "<h1>Новые темы:</h1>";
+        print "<h1>Темы:</h1>";
+        echo <<<HTML
+<form action="" method="post">
+<select  class="form-control" name="sort">
+<option selected="selected">Sort</option>
+ <option value="0">Ожидают модерацию</option>
+ <option value="1">Одобрено</option>
+ <option value="2">Отклонено</option>
+</select>
+<input type="submit" value="Сортировка">
+</form>
+
+
+
+HTML;
         while ($data = $stmt->fetch(PDO::FETCH_ASSOC)) {
             echo <<<HTML
 <head>
@@ -31,7 +43,6 @@ if (isset($_SESSION['id'])) {
 
 
 HTML;
-
         }
         if (isset($_POST['reject'])) {
             $stmt = $pdo->prepare("UPDATE `themes` SET `status` = 2 WHERE `id_theme` = ?");

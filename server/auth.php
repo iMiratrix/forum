@@ -15,20 +15,17 @@ if (!isset($_SESSION['id'])) {
         if ($stmt->rowCount() > 0) {
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
             if (password_verify($password, $user['password'])) {
-                if ($user['permission'] != 2) {
-                    $_SESSION['id'] = $user['id_user'];
-                    header("Location:" . $site_url);
-                } else {
-                    print("Вы заблокированы<br><a href='${site_url}'>Назад</a>");
-                }
-            } else {
-                print("Неверный логин или пароль<br><a href='${site_url}'>Назад</a>");
+                $_SESSION['id'] = $user['permission'];
+                $_SESSION['id_user'] = $user['id_user'];
+                header("Location:" . $site_url);
             }
         } else {
             print("Неверный логин или пароль<br><a href='${site_url}'>Назад</a>");
         }
-
+    } else {
+        print("Неверный логин или пароль<br><a href='${site_url}'>Назад</a>");
     }
+
 } else {
     header("Location:" . $site_url);
 }

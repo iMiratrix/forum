@@ -3,6 +3,7 @@ session_start();
 require '../server/config.php';
 
 if (!isset($_SESSION['id'])) {
+    print "<a href='$site_url/modules/themes.php'>Главная</a><br>";
     echo <<<HTML
 <head>
 <title>Регистрация</title>
@@ -10,9 +11,9 @@ if (!isset($_SESSION['id'])) {
 <body>
 <form action="${site_url}/server/reg.php" method="post">
 <input type="email" name="email" placeholder="email">
-<input type="text" name="name" placeholder="Имя">
-<input type="text" name="surname" placeholder="Фамилия">
-<input type="password" name="password" placeholder="password">
+<input required type="text" name="name" placeholder="Имя">
+<input required type="text" name="surname" placeholder="Фамилия">
+<input required type="password" name="password" placeholder="password">
 <input type="submit" name="sub" value="enter">
 </form>
 <a href="${site_url}/modules/auth.php">Авторизация</a>
