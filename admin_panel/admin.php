@@ -25,6 +25,17 @@ if (isset($_SESSION['id'])) {
 
 HTML;
         while ($data = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            switch ($data['status']) {
+                case 0:
+                    $status0 = "none";
+                    break;
+                case 1:
+                    $status1 = "none";
+                    break;
+                case 2:
+                    $status2 = "none";
+
+            }
             echo <<<HTML
 <head>
 <title>Тема</title>
@@ -37,8 +48,8 @@ HTML;
 
 <form action="" method="post">
 <input type="hidden" name="id_theme" value="${data['id_theme']}">
-<input type="submit" value="Принять" name="accept">
-<input type="submit" value="Отклонить" name="reject">
+<input style="display: ${status1}" type="submit" value="Принять" name="accept">
+<input style="display: ${status2}" type="submit" value="Отклонить" name="reject">
 </form>
 
 
@@ -57,6 +68,18 @@ HTML;
         }
 
     } else {
+        echo <<<HTML
+  <h1>Темы:</h1>
+<form action="" method="post">
+<select  class="form-control" name="sort">
+<option selected="selected">Sort</option>
+ <option value="0">Ожидают модерацию</option>
+ <option value="1">Одобрено</option>
+ <option value="2">Отклонено</option>
+</select>
+<input type="submit" value="Сортировка">
+</form>
+HTML;
         print"<p>Нет тем</p>";
     }
 } else {

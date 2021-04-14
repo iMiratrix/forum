@@ -3,7 +3,7 @@ session_start();
 require '../server/config.php';
 
 if (isset($_SESSION['id'])) {
-    print "<a href='$site_url/modules/home.php'>Главная</a><br>";
+    print "<a href='$site_url/modules/themes.php'>Главная</a><br>";
     print "<a href='$site_url/server/logout.php'>Выйти из записи</a><br>
 <a href='$site_url/admin_panel/admin.php'>Назад</a><br>";
     $stmt = $pdo->prepare("SELECT * FROM users where permission = ? OR permission = ?");

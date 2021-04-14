@@ -10,7 +10,7 @@ if (!isset($_SESSION['id'])) {
 </head>
 <body>
 <form action="${site_url}/server/auth.php" method="post">
-<input type="text" name="email" placeholder="email">
+<input required type="text" name="email" placeholder="email">
 <input required type="password" name="password" placeholder="password">
 <input type="submit" name="sub" value="enter">
 </form>
